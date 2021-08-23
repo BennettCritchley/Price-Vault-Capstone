@@ -76,7 +76,6 @@ li, img {
 .mainPageCard {
   box-shadow: rgb(0 0 0 / 56%) 0px 22px 70px 4px;
   padding: 2%;
-  flex-basis: 16%;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -85,7 +84,7 @@ li, img {
 
 .mainPageCardImg {
   max-width: 100%;
-  padding: 10px;
+  padding-right: 20px;
 }
 
 .mainPageCardInfo {
