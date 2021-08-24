@@ -40,18 +40,20 @@
             <label for="sortQuerys" class="sortQuerys">Sort Results:</label>
             <select name="sortQuerys" id="sortQuerys" class="sortQuerys">
               <option value="">No Sorting</option>
-              <option value="{cmc, asc}">Lowest mana cost</option>
-              <option value="{cmc, desc}">Highest mana cost</option>
-              <option value="{usd, asc}">Lowest price first</option>
-              <option value="{usd, desc}">Highest price first</option>
-              <option value="{released, desc}">Newest card first</option>
-              <option value="{released, asc}">Oldest card first</option>
+              <option value="cmc,asc">Lowest mana cost</option>
+              <option value="cmc,desc">Highest mana cost</option>
+              <option value="usd,asc">Lowest price first</option>
+              <option value="usd,desc">Highest price first</option>
+              <option value="released,desc">Newest card first</option>
+              <option value="Released,asc">Oldest card first</option>
           </form>  
         </div>  
       </div>
+      <div class="random-card-area">
         <section class='hidden results'>
             <h2>Results</h2>
             <ul class='results-list'></ul>
         </section>
+      </div>
     </body>
 </html>

@@ -5,7 +5,7 @@ function watchPriceChecker() {
     event.preventDefault();
     const searchQuery = $(".cardSearchQuery").val();
     const currencyToFind = $("#currencys").val();
-    const sortingStyle = $("#sortQuerys").val().split();
+    const sortingStyle = $("#sortQuerys").val().split(",");
     priceCheckerFetch(searchQuery, sortingStyle);
   });
 }
@@ -15,12 +15,48 @@ function watchPriceChecker() {
 
 // Fetches and combines data from the forms then sends that data to the display for searchQuery
 function priceCheckerFetch(searchQuery, sortingStyle){
-  console.log(searchQuery);
-  console.log(sortingStyle);
-  let cardSearchQueryUrl = `https://api.scryfall.com/cards/search
-  ?unique=prints&dir=${sortingStyle[1]}&order=${sortingStyle[0]}&q=${searchQuery}`
-  console.log(cardSearchQueryUrl);
+  let cardSearchQueryUrl = `https://api.scryfall.com/cards/search?
+  unique=prints&dir=${sortingStyle[1]}&order=${sortingStyle[0]}&q=${searchQuery}`
+
+  fetch(cardSearchQueryUrl)
+    .then(response => response.json())
+    .then(queryData => displayQueryCards(queryData));
 }
+
+
+
+
+// displays fetched card data from a specific query
+function displayQueryCards(queryData) {
+  $(".results").empty();
+  if (queryData.total === 0) {
+    $(".results").text("No cards for the given search, Try keywords in the name such as: Sol, Primal, Black, Lotus.")
+  } else {
+    var i 
+    for (i = 0; i < queryData.data.length; i++){
+      const imgUrl = queryData.data[i].image_uris.toString();
+      console.log(imgUrl);
+      $(".results").append(`
+          <div class="mainPageCard">
+            <div class="mainPageCardImg">
+              <img src="${queryData.data[i].image_uris.small}">
+            </div>
+            <div class="mainPageCardInfo">
+              <h4>Name: ${queryData.data[i].name}</h4>
+              <h4>Set: ${queryData.data[i].set_name}</h4>
+              <h5>Price(USD): $ ${queryData.data[i].prices.usd}</h5>
+              <h5>Foil price(USD): $ ${queryData.data[i].prices.usd_foil}</h5>
+              <p>Abilitys: ${queryData.data[i].oracle_text}</p>
+              <p>EDHRec Rank: ${queryData.data[i].edhrec_rank}</p>
+            </div>
+          </div>`)
+    }
+  }
+  $('.results').removeClass("hidden")
+};
+
+
+
 
 // fetches the random card from the api then sends the data to mainPageDisplayRandom
 function mainPageRandomFetch() {
