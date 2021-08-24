@@ -7,6 +7,7 @@ function watchPriceChecker() {
     const currencyToFind = $("#currencys").val();
     const sortingStyle = $("#sortQuerys").val().split(",");
     priceCheckerFetch(searchQuery, sortingStyle);
+    console.log(currencyToFind)
   });
 }
 
@@ -29,17 +30,20 @@ function priceCheckerFetch(searchQuery, sortingStyle){
 // displays fetched card data from a specific query
 function displayQueryCards(queryData) {
   $(".results").empty();
+  $(".results").append(`<h2>Results</h2>`)
   if (queryData.total === 0) {
     $(".results").text("No cards for the given search, Try keywords in the name such as: Sol, Primal, Black, Lotus.")
   } else {
     var i 
     for (i = 0; i < queryData.data.length; i++){
-      const imgUrl = queryData.data[i].image_uris.toString();
-      console.log(imgUrl);
+      let imgUrl = queryData.data[i].image_uris;
+      if(queryData.data[i].image_uris === undefined) {
+        imgUrl = queryData.data[i].card_faces[0].image_uris
+      }
       $(".results").append(`
           <div class="mainPageCard">
             <div class="mainPageCardImg">
-              <img src="${queryData.data[i].image_uris.small}">
+              <img src="${imgUrl.small}">
             </div>
             <div class="mainPageCardInfo">
               <h4>Name: ${queryData.data[i].name}</h4>
@@ -52,7 +56,7 @@ function displayQueryCards(queryData) {
           </div>`)
     }
   }
-  $('.results').removeClass("hidden")
+  $('div').removeClass("hidden")
 };
 
 
