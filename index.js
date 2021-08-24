@@ -6,8 +6,8 @@ function watchPriceChecker() {
     const searchQuery = $(".cardSearchQuery").val();
     const currencyToFind = $("#currencys").val();
     const sortingStyle = $("#sortQuerys").val().split(",");
+    exchangeRateFetch(currencyToFind);
     priceCheckerFetch(searchQuery, sortingStyle);
-    console.log(currencyToFind)
   });
 }
 
@@ -27,8 +27,23 @@ function priceCheckerFetch(searchQuery, sortingStyle){
 
 
 
-// displays fetched card data from a specific query
-function displayQueryCards(queryData) {
+// fetches exchange rate then sends it to display query cards
+// let exchangeData
+function exchangeRateFetch(currencyToFind) {
+  let currencyFetchUrl = `https://api.coinbase.com/v2/prices/USD-${currencyToFind}/spot`
+
+  fetch(currencyFetchUrl)
+    .then(response => response.json())
+    .then(exchangeData => console.log(exchangeData.data.amount));
+}
+
+
+
+
+// displays fetched card data from a specific query and update the card prices
+function displayQueryCards(queryData, exchangeData) {
+  // console.log(exchangeData);
+  // let exchangeRate = parseInt(exchangeData.data.amount)
   $(".results").empty();
   $(".results").append(`<h2>Results</h2>`)
   if (queryData.total === 0) {
@@ -37,6 +52,11 @@ function displayQueryCards(queryData) {
     var i 
     for (i = 0; i < queryData.data.length; i++){
       let imgUrl = queryData.data[i].image_uris;
+      let currentBasePrice = parseInt(queryData.data[i].prices.usd);
+      let currentBasePriceFoil = parseInt(queryData.data[i].prices.usd_foil);
+      // currentBasePrice = currentBasePrice * exchangeRate;
+      // console.log(currentBasePrice);
+
       if(queryData.data[i].image_uris === undefined) {
         imgUrl = queryData.data[i].card_faces[0].image_uris
       }
@@ -48,8 +68,8 @@ function displayQueryCards(queryData) {
             <div class="mainPageCardInfo">
               <h4>Name: ${queryData.data[i].name}</h4>
               <h4>Set: ${queryData.data[i].set_name}</h4>
-              <h5>Price(USD): $ ${queryData.data[i].prices.usd}</h5>
-              <h5>Foil price(USD): $ ${queryData.data[i].prices.usd_foil}</h5>
+              <h5>Price(): $ ${queryData.data[i].prices.usd}</h5>
+              <h5>Foil price(): $ ${queryData.data[i].prices.usd_foil}</h5>
               <p>Abilitys: ${queryData.data[i].oracle_text}</p>
               <p>EDHRec Rank: ${queryData.data[i].edhrec_rank}</p>
             </div>
@@ -111,6 +131,7 @@ function mainPageDisplayRandom(data) {
           </div>`)
   $('div').removeClass('hidden')
 }
+
 
 
 
