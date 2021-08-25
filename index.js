@@ -6,8 +6,7 @@ function watchPriceChecker() {
     const searchQuery = $(".cardSearchQuery").val();
     const currencyToFind = $("#currencys").val();
     const sortingStyle = $("#sortQuerys").val().split(",");
-    exchangeRateFetch(currencyToFind);
-    priceCheckerFetch(searchQuery, sortingStyle);
+    priceCheckerFetch(searchQuery, sortingStyle, currencyToFind);
   });
 }
 
@@ -15,26 +14,28 @@ function watchPriceChecker() {
 
 
 // Fetches and combines data from the forms then sends that data to the display for searchQuery
-function priceCheckerFetch(searchQuery, sortingStyle){
-  let cardSearchQueryUrl = `https://api.scryfall.com/cards/search?
-  unique=prints&dir=${sortingStyle[1]}&order=${sortingStyle[0]}&q=${searchQuery}`
+function priceCheckerFetch(searchQuery, sortingStyle, currencyToFind){
+  let cardSearchQueryUrl = `https://api.scryfall.com/cards/search?unique=prints&dir=${sortingStyle[1]}&order=${sortingStyle[0]}&q=${searchQuery}`
 
-  fetch(cardSearchQueryUrl)
-    .then(response => response.json())
-    .then(queryData => displayQueryCards(queryData));
-}
-
-
-
-
-// fetches exchange rate then sends it to display query cards
-// let exchangeData
-function exchangeRateFetch(currencyToFind) {
   let currencyFetchUrl = `https://api.coinbase.com/v2/prices/USD-${currencyToFind}/spot`
 
-  fetch(currencyFetchUrl)
-    .then(response => response.json())
-    .then(exchangeData => console.log(exchangeData.data.amount));
+  Promise.all([
+    fetch(cardSearchQueryUrl),
+    fetch(currencyFetchUrl)
+  ]) .then(function (responses) {
+    return Promise.all(responses.map(function (response) {
+      return response.json();
+    }));
+  }).then(function (data) {
+    let queryData = data[0];
+    let exchangeData = data[1]
+    displayQueryCards(queryData, exchangeData)
+  })
+
+  // fetch(cardSearchQueryUrl)
+  //   .then(response => response.json())
+  //   .then(queryData2 => exchangeRateFetch(currencyToFind))
+  //   .then(queryData => displayQueryCards(queryData));
 }
 
 
@@ -42,36 +43,52 @@ function exchangeRateFetch(currencyToFind) {
 
 // displays fetched card data from a specific query and update the card prices
 function displayQueryCards(queryData, exchangeData) {
-  // console.log(exchangeData);
-  // let exchangeRate = parseInt(exchangeData.data.amount)
+   let exchangeRate = parseFloat(exchangeData.data.amount)
+   let currentCurrency = exchangeData.data.currency
   $(".results").empty();
   $(".results").append(`<h2>Results</h2>`)
-  if (queryData.total === 0) {
+  if (!queryData) {
     $(".results").text("No cards for the given search, Try keywords in the name such as: Sol, Primal, Black, Lotus.")
   } else {
     var i 
     for (i = 0; i < queryData.data.length; i++){
       let imgUrl = queryData.data[i].image_uris;
-      let currentBasePrice = parseInt(queryData.data[i].prices.usd);
-      let currentBasePriceFoil = parseInt(queryData.data[i].prices.usd_foil);
-      // currentBasePrice = currentBasePrice * exchangeRate;
-      // console.log(currentBasePrice);
+      let currentBasePrice = parseFloat(queryData.data[i].prices.usd)
+      let currentBasePriceFoil = parseFloat(queryData.data[i].prices.usd_foil)
+       currentBasePrice = currentBasePrice * exchangeRate;
+       currentBasePriceFoil = currentBasePriceFoil * exchangeRate;
+       console.log(currentBasePrice);
+
+
+      if(isNaN(currentBasePrice)) {
+        currentBasePrice = 'Price not available, Try again later.';
+      } else {
+        currentBasePrice = currentBasePrice.toFixed(2);
+      };
+      
+      if(isNaN(currentBasePriceFoil)) {
+        currentBasePriceFoil = 'Price not available, Try again later.';
+      } else {
+        currentBasePriceFoil = currentBasePriceFoil.toFixed(2);
+      };
 
       if(queryData.data[i].image_uris === undefined) {
         imgUrl = queryData.data[i].card_faces[0].image_uris
       }
+
+      
       $(".results").append(`
           <div class="mainPageCard">
             <div class="mainPageCardImg">
               <img src="${imgUrl.small}">
             </div>
             <div class="mainPageCardInfo">
-              <h4>Name: ${queryData.data[i].name}</h4>
-              <h4>Set: ${queryData.data[i].set_name}</h4>
-              <h5>Price(): $ ${queryData.data[i].prices.usd}</h5>
-              <h5>Foil price(): $ ${queryData.data[i].prices.usd_foil}</h5>
-              <p>Abilitys: ${queryData.data[i].oracle_text}</p>
-              <p>EDHRec Rank: ${queryData.data[i].edhrec_rank}</p>
+              <h4>Name:</h4><p> ${queryData.data[i].name}</p>
+              <h4>Set:</h4><p> ${queryData.data[i].set_name}</p>
+              <h4>Price(${currentCurrency}):</h4><p> ${currentBasePrice}</p>
+              <h4>Foil price(${currentCurrency}):</h4><p> ${currentBasePriceFoil}</p>
+              <h4>Abilitys:</h4><p> ${queryData.data[i].oracle_text}</p>
+              <h4>EDHRec Rank:</h4><p> ${queryData.data[i].edhrec_rank}</p>
             </div>
           </div>`)
     }
