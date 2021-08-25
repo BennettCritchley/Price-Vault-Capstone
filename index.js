@@ -31,7 +31,9 @@ function priceCheckerFetch(searchQuery, sortingStyle, currencyToFind){
     let exchangeData = data[1]
     displayQueryCards(queryData, exchangeData)
   })
-
+  .catch(error => {
+    console.error(error.message)
+  });
   // fetch(cardSearchQueryUrl)
   //   .then(response => response.json())
   //   .then(queryData2 => exchangeRateFetch(currencyToFind))
@@ -43,7 +45,6 @@ function priceCheckerFetch(searchQuery, sortingStyle, currencyToFind){
 
 // displays fetched card data from a specific query and update the card prices
 function displayQueryCards(queryData, exchangeData) {
-  console.log(queryData)
    let exchangeRate = parseFloat(exchangeData.data.amount)
    let currentCurrency = exchangeData.data.currency
   $(".results").empty();
@@ -58,7 +59,6 @@ function displayQueryCards(queryData, exchangeData) {
       let currentBasePriceFoil = parseFloat(queryData.data[i].prices.usd_foil)
        currentBasePrice = currentBasePrice * exchangeRate;
        currentBasePriceFoil = currentBasePriceFoil * exchangeRate;
-       console.log(currentBasePrice);
 
 
       if(isNaN(currentBasePrice)) {
@@ -103,7 +103,6 @@ function displayQueryCards(queryData, exchangeData) {
 // fetches the random card from the api then sends the data to mainPageDisplayRandom
 function mainPageRandomFetch() {
   const randomCardUrl = "https://api.scryfall.com/cards/random?digital=false";
-  console.log('Loading Random Card...');
 
   fetch(randomCardUrl)
     .then(response => response.json())
@@ -155,11 +154,9 @@ function mainPageDisplayRandom(data) {
 
 // watches my app starting point for one of the buttons to be pressed to either A. take you into the price checker. or B. show you a random card
 function watchAppStart() {
-  console.log('App loaded...Pay homenage to the Vault');
   $("#enterTheVault").submit((event) => {
     event.preventDefault();
     window.location.href = "Htmls/priceChecker.html";
-    console.log('Welcome to the Vault...');
     watchPriceChecker();
 
   });
