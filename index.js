@@ -60,7 +60,6 @@ function displayQueryCards(queryData, exchangeData) {
        currentBasePrice = currentBasePrice * exchangeRate;
        currentBasePriceFoil = currentBasePriceFoil * exchangeRate;
 
-
       if(isNaN(currentBasePrice)) {
         currentBasePrice = 'Price not available, Try again later. Alternitavly The card may be too old.';
       } else {
