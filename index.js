@@ -43,11 +43,12 @@ function priceCheckerFetch(searchQuery, sortingStyle, currencyToFind){
 
 // displays fetched card data from a specific query and update the card prices
 function displayQueryCards(queryData, exchangeData) {
+  console.log(queryData)
    let exchangeRate = parseFloat(exchangeData.data.amount)
    let currentCurrency = exchangeData.data.currency
   $(".results").empty();
   $(".results").append(`<h2>Results</h2>`)
-  if (!queryData) {
+  if (queryData.object === "error") {
     $(".results").text("No cards for the given search, Try keywords in the name such as: Sol, Primal, Black, Lotus.")
   } else {
     var i 
@@ -61,13 +62,13 @@ function displayQueryCards(queryData, exchangeData) {
 
 
       if(isNaN(currentBasePrice)) {
-        currentBasePrice = 'Price not available, Try again later.';
+        currentBasePrice = 'Price not available, Try again later. Alternitavly The card may be too old.';
       } else {
         currentBasePrice = currentBasePrice.toFixed(2);
       };
       
       if(isNaN(currentBasePriceFoil)) {
-        currentBasePriceFoil = 'Price not available, Try again later.';
+        currentBasePriceFoil = 'Price not available, Card may not have a foil version.';
       } else {
         currentBasePriceFoil = currentBasePriceFoil.toFixed(2);
       };
@@ -76,7 +77,7 @@ function displayQueryCards(queryData, exchangeData) {
         imgUrl = queryData.data[i].card_faces[0].image_uris
       }
 
-      
+
       $(".results").append(`
           <div class="mainPageCard">
             <div class="mainPageCardImg">
