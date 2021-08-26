@@ -8,6 +8,11 @@ function watchPriceChecker() {
     const sortingStyle = $("#sortQuerys").val().split(",");
     priceCheckerFetch(searchQuery, sortingStyle, currencyToFind);
   });
+
+  $('#leaveVault').submit((event) => {
+    event.preventDefault();
+    window.location.href = "../index.html"
+  })
 }
 
 
