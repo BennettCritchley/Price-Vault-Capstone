@@ -16,24 +16,25 @@ function watchPriceChecker() {
 // Fetches and combines data from the forms then sends that data to the display for searchQuery
 function priceCheckerFetch(searchQuery, sortingStyle, currencyToFind){
   let cardSearchQueryUrl = `https://api.scryfall.com/cards/search?unique=prints&dir=${sortingStyle[1]}&order=${sortingStyle[0]}&q=${searchQuery}`
-
   let currencyFetchUrl = `https://api.coinbase.com/v2/prices/USD-${currencyToFind}/spot`
 
   Promise.all([
     fetch(cardSearchQueryUrl),
     fetch(currencyFetchUrl)
-  ]) .then(function (responses) {
+    ])
+       .then(function (responses) {
     return Promise.all(responses.map(function (response) {
       return response.json();
+      throw new Error('Search Invalid')
     }));
   }).then(function (data) {
     let queryData = data[0];
     let exchangeData = data[1]
     displayQueryCards(queryData, exchangeData)
   })
-  .catch(error => {
-    console.error(error.message)
-  });
+  .catch(error => $(".results").text("No cards for the given search, Try keywords in the name such as: Sol, Primal, Black, Lotus.")
+  );
+
   // fetch(cardSearchQueryUrl)
   //   .then(response => response.json())
   //   .then(queryData2 => exchangeRateFetch(currencyToFind))
