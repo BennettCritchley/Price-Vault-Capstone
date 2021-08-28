@@ -85,8 +85,14 @@ function displayQueryCards(queryData, exchangeData) {
       };
 
       if(queryData.data[i].image_uris === undefined) {
-        imgUrl = queryData.data[i].card_faces[0].image_uris
-      }
+        imgUrl = queryData.data[i].card_faces[0].image_uris;
+      };
+
+      // if(queryData.data[i].oracle_text === undefined) {
+      //   let abilityText = queryData.data[i].card_faces[0].oracle_text;
+      // } else {
+      //   let abilityText = queryData.data[i].oracle_text;
+      // };
 
       // if(currentBasePriceFoil > currentBasePriceCheckBefore){
       //   queryData.data[i] = queryData.data[i-1]

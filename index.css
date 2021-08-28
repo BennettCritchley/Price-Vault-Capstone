@@ -4,6 +4,7 @@
 
 body {
   font-family: 'Roboto', sans-serif;
+  background-image: url(Images/background.png);
 }
 
 button, input[type="text"] {
@@ -26,6 +27,7 @@ li {
 
 .fullSearchArea{
   display: flex;
+  background-color: RGBA(226,226,227,0.75);
   box-shadow: rgb(0 0 0 / 17%) 0px -23px 25px 0px inset, rgb(0 0 0 / 15%) 0px -36px 30px 0px inset, rgb(0 0 0 / 10%) 0px -79px 40px 0px inset, rgb(0 0 0 / 6%) 0px 2px 1px, rgb(0 0 0 / 9%) 0px 4px 2px, rgb(0 0 0 / 9%) 0px 8px 4px, rgb(0 0 0 / 9%) 0px 16px 8px, rgb(0 0 0 / 9%) 0px 32px 16px;
   border-radius: 35px;
 }
@@ -45,6 +47,7 @@ li {
 
 .sortAndCurrency{
   margin-top: 60px;
+  padding-right: 20px;
 }
 
 .currencys {
@@ -60,6 +63,15 @@ li {
 }
 
 /* test */
+.results {
+  display: flexbox;
+}
+
+.results h2 {
+  color:ivory
+}
+
+
 .random-card-area {
   margin-top: 50px;
   display: flex;
@@ -69,6 +81,7 @@ li {
 }
 
 .mainPageCard {
+  background-color: RGBA(226,226,227,0.75);
   box-shadow: rgb(0 0 0 / 56%) 0px 22px 70px 4px;
   padding: 2%;
   display: flex;
@@ -79,11 +92,22 @@ li {
 }
 
 .mainPageCardImg {
+  display: flex;
+  flex: 1;
   padding-right: 20px;
+  width: 80%;
+}
+
+.mainPageCardImg img {
+  border-radius: 28px;
+}
+
+.mainPageCardInfo, p {
+  padding-bottom: 20px;
 }
 
 .mainPageCardInfo {
-  margin-top: auto;
+  flex-grow: 1;
 }
 
 .mainPageExample {
@@ -94,6 +118,11 @@ li {
 
 .mainPagePretty {
   padding: 20px;
+}
+
+#leaveVault {
+  margin-top: 20px;
+  margin-left: 20px;
 }
 
 #enterVault {
