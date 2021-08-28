@@ -24,10 +24,6 @@ li {
   padding: 10px;
 }
 
-li, img {
-  max-width: 500px;
-}
-
 .fullSearchArea{
   display: flex;
   box-shadow: rgb(0 0 0 / 17%) 0px -23px 25px 0px inset, rgb(0 0 0 / 15%) 0px -36px 30px 0px inset, rgb(0 0 0 / 10%) 0px -79px 40px 0px inset, rgb(0 0 0 / 6%) 0px 2px 1px, rgb(0 0 0 / 9%) 0px 4px 2px, rgb(0 0 0 / 9%) 0px 8px 4px, rgb(0 0 0 / 9%) 0px 16px 8px, rgb(0 0 0 / 9%) 0px 32px 16px;
@@ -48,7 +44,6 @@ li, img {
 }
 
 .sortAndCurrency{
-  padding-right: 40px;
   margin-top: 60px;
 }
 
@@ -84,7 +79,6 @@ li, img {
 }
 
 .mainPageCardImg {
-  max-width: 100%;
   padding-right: 20px;
 }
 
@@ -108,4 +102,17 @@ li, img {
 
 #updateLooks {
   margin: 10px;
+}
+
+@media only screen and (max-width: 500px){
+  
+  .close-button {
+    display: inline-block;
+    box-sizing: inherit;
+  }
+  
+  .mainPageCard, img{
+    width: 100%;
+    display: block
+  }
 }

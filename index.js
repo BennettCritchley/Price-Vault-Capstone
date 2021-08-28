@@ -13,6 +13,10 @@ function watchPriceChecker() {
     event.preventDefault();
     window.location.href = "../index.html"
   })
+
+  // $('.close-button').submit((event) => {
+  //   $(".cardSearchQuery").val() = '';
+  // })
 }
 
 
@@ -62,9 +66,11 @@ function displayQueryCards(queryData, exchangeData) {
     for (i = 0; i < queryData.data.length; i++){
       let imgUrl = queryData.data[i].image_uris;
       let currentBasePrice = parseFloat(queryData.data[i].prices.usd)
+      // let currentBasePriceCheckBefore = parseFloat(queryData.data[i-1].prices.usd)
       let currentBasePriceFoil = parseFloat(queryData.data[i].prices.usd_foil)
        currentBasePrice = currentBasePrice * exchangeRate;
        currentBasePriceFoil = currentBasePriceFoil * exchangeRate;
+      //  currentBasePriceCheckBefore = currentBasePriceCheckBefore * exchangeRate;
 
       if(isNaN(currentBasePrice)) {
         currentBasePrice = 'Price not available, Try again later. Alternitavly The card may be too old.';
@@ -82,11 +88,17 @@ function displayQueryCards(queryData, exchangeData) {
         imgUrl = queryData.data[i].card_faces[0].image_uris
       }
 
+      // if(currentBasePriceFoil > currentBasePriceCheckBefore){
+      //   queryData.data[i] = queryData.data[i-1]
+      //   if (queryData.data[i] === queryData.data[-1]) {
+      //     queryData.data[i] = queryData.data[0]
+      //   }
+      // } 
 
       $(".results").append(`
           <div class="mainPageCard">
             <div class="mainPageCardImg">
-              <img src="${imgUrl.small}">
+              <img src="${imgUrl.normal}">
             </div>
             <div class="mainPageCardInfo">
               <h4>Name:</h4><p> ${queryData.data[i].name}</p>
