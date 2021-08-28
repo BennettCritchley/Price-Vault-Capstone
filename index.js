@@ -139,7 +139,7 @@ function mainPageRandomFetch() {
 function mainPageDisplayRandom(data) {
   $(".random-card-area").empty();
   let randomCardName = data.name;
-  let randomCardImg = data.image_uris.small;
+  let randomCardImg = data.image_uris.normal;
   let randomAbilitys = data.oracle_text;
   let randomPriceToFind = data.prices.usd;
   let randomFoilPriceToFind = data.prices.usd_foil;
