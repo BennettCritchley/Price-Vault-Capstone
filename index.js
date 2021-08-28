@@ -107,12 +107,12 @@ function displayQueryCards(queryData, exchangeData) {
               <img src="${imgUrl.normal}">
             </div>
             <div class="mainPageCardInfo">
-              <h4>Name:</h4><p> ${queryData.data[i].name}</p>
-              <h4>Set:</h4><p> ${queryData.data[i].set_name}</p>
-              <h4>Price(${currentCurrency}):</h4><p> ${currentBasePrice}</p>
-              <h4>Foil price(${currentCurrency}):</h4><p> ${currentBasePriceFoil}</p>
-              <h4>Abilitys:</h4><p> ${queryData.data[i].oracle_text}</p>
-              <h4>EDHRec Rank:</h4><p> ${queryData.data[i].edhrec_rank}</p>
+              <h3>Name:</h3><p> ${queryData.data[i].name}</p>
+              <h3>Set:</h3><p> ${queryData.data[i].set_name}</p>
+              <h3>Price(${currentCurrency}):</h3><p> ${currentBasePrice}</p>
+              <h3>Foil price(${currentCurrency}):</h3><p> ${currentBasePriceFoil}</p>
+              <h3>Abilitys:</h3><p> ${queryData.data[i].oracle_text}</p>
+              <h3>EDHRec Rank:</h3><p> ${queryData.data[i].edhrec_rank}</p>
             </div>
           </div>`)
     }
@@ -161,12 +161,12 @@ function mainPageDisplayRandom(data) {
               <img src="${randomCardImg}">
             </div>
             <div class="mainPageCardInfo">
-              <h4>Name: ${randomCardName}</h4>
-              <h4>Set: ${randomSet}</h4>
-              <h5>Price(USD): $ ${randomPriceToFind}</h5>
-              <h5>Foil price(USD): $ ${randomFoilPriceToFind}</h5>
-              <p>Abilitys: ${randomAbilitys}</p>
-              <p>EDHRec Rank: ${randomRank}</p>
+              <h3>Name:</h3><p> ${randomCardName}</p>
+              <h3>Set:</h3><p> ${randomSet}</p>
+              <h3>Price(USD):</h3><p> $ ${randomPriceToFind}</p>
+              <h3>Foil price(USD):</h3><p> $ ${randomFoilPriceToFind}</p>
+              <h3>Abilitys:</h3><p> ${randomAbilitys}</p>
+              <h3>EDHRec Rank:</h3><p> ${randomRank}</p>
             </div>
           </div>`)
   $('div').removeClass('hidden')

@@ -1,5 +1,17 @@
+@font-face {
+  font-family: 'Beleren-Bold';
+  src: url('magicFonts/Beleren2016-Bold.ttf');
+  font-style: normal;
+  font-weight: bold;
+  text-rendering: optimizeLegibility;
+}
+
+
+
+
 * {
   box-sizing: border-box;
+  font-family: 'Beleren-Bold';
 }
 
 body {
@@ -89,6 +101,7 @@ li {
   align-items: center;
   border-radius: 10px;
   margin-bottom: 20px;
+  margin: 40px;
 }
 
 .mainPageCardImg {
@@ -133,6 +146,7 @@ li {
 #updateLooks {
   margin: 10px;
 }
+
 
 @media only screen and (max-width: 500px){
   
