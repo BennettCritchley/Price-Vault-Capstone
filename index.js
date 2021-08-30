@@ -8,15 +8,11 @@ function watchPriceChecker() {
     const sortingStyle = $("#sortQuerys").val().split(",");
     priceCheckerFetch(searchQuery, sortingStyle, currencyToFind);
   });
-
+// watches for the leave button to be clicked to go back to random cards screen
   $('#leaveVault').submit((event) => {
     event.preventDefault();
     window.location.href = "../index.html"
   })
-
-  // $('.close-button').submit((event) => {
-  //   $(".cardSearchQuery").val() = '';
-  // })
 }
 
 
@@ -26,7 +22,7 @@ function watchPriceChecker() {
 function priceCheckerFetch(searchQuery, sortingStyle, currencyToFind){
   let cardSearchQueryUrl = `https://api.scryfall.com/cards/search?unique=prints&dir=${sortingStyle[1]}&order=${sortingStyle[0]}&q=${searchQuery}`
   let currencyFetchUrl = `https://api.coinbase.com/v2/prices/USD-${currencyToFind}/spot`
-
+// use promise all to fetch 2 urls at once then get there values by using [0] [1]
   Promise.all([
     fetch(cardSearchQueryUrl),
     fetch(currencyFetchUrl)
@@ -43,11 +39,6 @@ function priceCheckerFetch(searchQuery, sortingStyle, currencyToFind){
   })
   .catch(error => $(".results").text("No cards for the given search, Try keywords in the name such as: Sol, Primal, Black, Lotus.")
   );
-
-  // fetch(cardSearchQueryUrl)
-  //   .then(response => response.json())
-  //   .then(queryData2 => exchangeRateFetch(currencyToFind))
-  //   .then(queryData => displayQueryCards(queryData));
 }
 
 
@@ -55,10 +46,13 @@ function priceCheckerFetch(searchQuery, sortingStyle, currencyToFind){
 
 // displays fetched card data from a specific query and update the card prices
 function displayQueryCards(queryData, exchangeData) {
+  // emptys the div and sets up variables
    let exchangeRate = parseFloat(exchangeData.data.amount)
    let currentCurrency = exchangeData.data.currency
   $(".results").empty();
   $(".results").append(`<h2>Results</h2>`)
+  // ------------------------------------
+  // loops through all the given cards for your search
   if (queryData.object === "error") {
     $(".results").text("No cards for the given search, Try keywords in the name such as: Sol, Primal, Black, Lotus.")
   } else {
@@ -66,28 +60,31 @@ function displayQueryCards(queryData, exchangeData) {
     for (i = 0; i < queryData.data.length; i++){
       let imgUrl = queryData.data[i].image_uris;
       let currentBasePrice = parseFloat(queryData.data[i].prices.usd)
-      // let currentBasePriceCheckBefore = parseFloat(queryData.data[i-1].prices.usd)
       let currentBasePriceFoil = parseFloat(queryData.data[i].prices.usd_foil)
        currentBasePrice = currentBasePrice * exchangeRate;
        currentBasePriceFoil = currentBasePriceFoil * exchangeRate;
-      //  currentBasePriceCheckBefore = currentBasePriceCheckBefore * exchangeRate;
 
+      // checks the price to make sure its a number
       if(isNaN(currentBasePrice)) {
         currentBasePrice = 'Price not available, Try again later. Alternitavly The card may be too old.';
       } else {
         currentBasePrice = currentBasePrice.toFixed(2);
       };
       
+      // checks the price to make sure its a number
       if(isNaN(currentBasePriceFoil)) {
         currentBasePriceFoil = 'Price not available, Card may not have a foil version.';
       } else {
         currentBasePriceFoil = currentBasePriceFoil.toFixed(2);
       };
 
+      // makes sure its not a double faced card if it is it gets the front face of that card
       if(queryData.data[i].image_uris === undefined) {
         imgUrl = queryData.data[i].card_faces[0].image_uris;
       };
 
+
+// for later use
       // if(queryData.data[i].oracle_text === undefined) {
       //   let abilityText = queryData.data[i].card_faces[0].oracle_text;
       // } else {
@@ -100,7 +97,10 @@ function displayQueryCards(queryData, exchangeData) {
       //     queryData.data[i] = queryData.data[0]
       //   }
       // } 
+// -------------------------------
 
+
+// displays updated card data from specific search
       $(".results").append(`
           <div class="mainPageCard">
             <div class="mainPageCardImg">
@@ -145,16 +145,19 @@ function mainPageDisplayRandom(data) {
   let randomFoilPriceToFind = data.prices.usd_foil;
   let randomRank = data.edhrec_rank;
   let randomSet = data.set_name;
+  // if the price is fluctuating too much or too high
   if(randomPriceToFind === null){
     randomPriceToFind = "Price Not Available. :(";
   };
+  // if the price is fluctuating too much or too high
   if(randomFoilPriceToFind === null){
     randomFoilPriceToFind = "Price Not Available. :("
   };
+  // if its a unranked item such as a basic land / tokens
   if(randomRank === undefined){
     randomRank = "N/A"
   };
-
+// Display card info
   $(".random-card-area").append(`
           <div class="mainPageCard">
             <div class="mainPageCardImg">
@@ -173,8 +176,6 @@ function mainPageDisplayRandom(data) {
 }
 
 
-
-
 // watches my app starting point for one of the buttons to be pressed to either A. take you into the price checker. or B. show you a random card
 function watchAppStart() {
   $("#enterTheVault").submit((event) => {
@@ -183,12 +184,14 @@ function watchAppStart() {
     watchPriceChecker();
 
   });
-
+// watches for a random card submit then calls the random fetch
   $("#mainRandomForm").submit((event) => {
     event.preventDefault();
     mainPageRandomFetch();
   });
 }
 
+
+// watches my pages on app load
 $(watchAppStart);
 $(watchPriceChecker);
