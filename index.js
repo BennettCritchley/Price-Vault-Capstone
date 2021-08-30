@@ -9,7 +9,7 @@ function watchPriceChecker() {
     priceCheckerFetch(searchQuery, sortingStyle, currencyToFind);
   });
 // watches for the leave button to be clicked to go back to random cards screen
-  $('#leaveVault').submit((event) => {
+  $("#leaveVault").submit((event) => {
     event.preventDefault();
     window.location.href = "../index.html"
   })
@@ -30,7 +30,7 @@ function priceCheckerFetch(searchQuery, sortingStyle, currencyToFind){
        .then(function (responses) {
     return Promise.all(responses.map(function (response) {
       return response.json();
-      throw new Error('Search Invalid')
+      throw new Error("Search Invalid")
     }));
   }).then(function (data) {
     let queryData = data[0];
@@ -50,7 +50,7 @@ function displayQueryCards(queryData, exchangeData) {
    let exchangeRate = parseFloat(exchangeData.data.amount)
    let currentCurrency = exchangeData.data.currency
   $(".results").empty();
-  $(".results").append(`<h2>Results</h2>`)
+  $(".results").append("<h2>Results</h2>")
   // ------------------------------------
   // loops through all the given cards for your search
   if (queryData.object === "error") {
@@ -66,14 +66,14 @@ function displayQueryCards(queryData, exchangeData) {
 
       // checks the price to make sure its a number
       if(isNaN(currentBasePrice)) {
-        currentBasePrice = 'Price not available, Try again later. Alternitavly The card may be too old.';
+        currentBasePrice = "Price not available, Try again later. Alternitavly The card may be too old.";
       } else {
         currentBasePrice = currentBasePrice.toFixed(2);
       };
       
       // checks the price to make sure its a number
       if(isNaN(currentBasePriceFoil)) {
-        currentBasePriceFoil = 'Price not available, Card may not have a foil version.';
+        currentBasePriceFoil = "Price not available, Card may not have a foil version.";
       } else {
         currentBasePriceFoil = currentBasePriceFoil.toFixed(2);
       };
@@ -117,7 +117,7 @@ function displayQueryCards(queryData, exchangeData) {
           </div>`)
     }
   }
-  $('div').removeClass("hidden")
+  $("div").removeClass("hidden")
 };
 
 
