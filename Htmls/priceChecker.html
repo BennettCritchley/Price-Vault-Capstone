@@ -7,11 +7,14 @@
         <title>card search capstone wireframe</title>
         <link rel="stylesheet" href="../index.css">
         <link rel="htmlsheet" href="../index.html">
+        <link rel="icon" type="image/png" href="../Images/vault.png">
         <script src="https://code.jquery.com/jquery-3.3.1.js" integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60=" crossorigin="anonymous"></script>
         <script src="../index.js"></script>
     </head>
     <body>
+    <!-- button to go to main screen -->
      <form id="leaveVault"><input type='submit' value='Leave the vault.' class='spaceOut'></form>
+     <!-- search area -->
       <div class="fullSearchArea">
         <form class='searchForm'>
           <div>
@@ -19,11 +22,11 @@
               <h3>Enter any card name or key words in that cards name</h3>
               <p>(Please change your sorting values + currency prior to your search)</p></label>
             <input type=text class='cardSearchQuery spaceOut' name='cardSearch' placeholder="Black Lotus" required><br>
-            <!-- <button class="close-button" type="reset">Reset Search Area</button> -->
             <input type="submit" value="Search that card!" class="spaceOut">
           </div>
         </form>
 
+        <!-- sorting / currency forms -->
         <div class="sortAndCurrency">
           <form class='currencyForm'>
             <label for="currencys" class="currencys">Currency:</label>
@@ -53,6 +56,7 @@
           </form>  
         </div>  
       </div>
+      <!-- card display area -->
       <div class="hidden">
       <div class="random-card-area">
         <section class='results'>
