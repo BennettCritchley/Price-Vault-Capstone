@@ -6,8 +6,7 @@
   text-rendering: optimizeLegibility;
 }
 
-
-
+/* main css changes */
 
 * {
   box-sizing: border-box;
@@ -36,6 +35,8 @@ ul {
 li {
   padding: 10px;
 }
+
+/* changes for forms / search areas */
 
 .fullSearchArea{
   display: flex;
@@ -74,7 +75,6 @@ li {
   display: none;
 }
 
-/* test */
 .results {
   display: flexbox;
 }
@@ -147,6 +147,7 @@ li {
   margin: 10px;
 }
 
+/* media querys */
 
 @media only screen and (max-width: 500px){
   
