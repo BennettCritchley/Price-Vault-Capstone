@@ -76,6 +76,7 @@ li {
 }
 
 .results {
+  color: lightgray;
   display: flexbox;
 }
 
