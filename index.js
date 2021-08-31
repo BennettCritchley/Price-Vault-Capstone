@@ -61,6 +61,7 @@ function displayQueryCards(queryData, exchangeData) {
       let imgUrl = queryData.data[i].image_uris;
       let currentBasePrice = parseFloat(queryData.data[i].prices.usd)
       let currentBasePriceFoil = parseFloat(queryData.data[i].prices.usd_foil)
+      let imgAlt = `Image of '${queryData.data[i].name}' Magic the Gathering card`
        currentBasePrice = currentBasePrice * exchangeRate;
        currentBasePriceFoil = currentBasePriceFoil * exchangeRate;
 
@@ -104,7 +105,7 @@ function displayQueryCards(queryData, exchangeData) {
       $(".results").append(`
           <div class="mainPageCard">
             <div class="mainPageCardImg">
-              <img src="${imgUrl.normal}">
+              <img src="${imgUrl.normal}" alt="${imgAlt}">
             </div>
             <div class="mainPageCardInfo">
               <h3>Name:</h3><p> ${queryData.data[i].name}</p>
@@ -140,6 +141,7 @@ function mainPageDisplayRandom(data) {
   $(".random-card-area").empty();
   let randomCardName = data.name;
   let randomCardImg = data.image_uris.normal;
+  let randomImgAlt = `Image of '${data.name}' Magic the Gathering card`
   let randomAbilitys = data.oracle_text;
   let randomPriceToFind = data.prices.usd;
   let randomFoilPriceToFind = data.prices.usd_foil;
@@ -161,7 +163,7 @@ function mainPageDisplayRandom(data) {
   $(".random-card-area").append(`
           <div class="mainPageCard">
             <div class="mainPageCardImg">
-              <img src="${randomCardImg}">
+              <img src="${randomCardImg}" alt="${randomImgAlt}">
             </div>
             <div class="mainPageCardInfo">
               <h3>Name:</h3><p> ${randomCardName}</p>
