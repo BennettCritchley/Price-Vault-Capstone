@@ -80,6 +80,10 @@ li {
   display: flexbox;
 }
 
+.mainPageCard {
+  color: black
+}
+
 .results h2 {
   color:ivory
 }
