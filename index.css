@@ -147,6 +147,39 @@ li {
   margin: 10px;
 }
 
+/* footer things */
+
+footer {
+  position: absolute;
+  bottom: 0;
+  padding: 20px;
+  width: 100%
+}
+
+.footer-flex {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: RGBA(226,226,227,0.75);
+  box-shadow: rgba(0, 0, 0, 0.45) 20px 25px 0px -20px;
+  border-radius: 35px;
+  flex-direction: column;
+}
+
+.footer-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.footerImgFade {
+  opacity: 1;
+  transition: 0.3s;
+}
+.footerImgFade:hover {
+  opacity: 0.6;
+}
+
+
 /* media querys */
 
 @media only screen and (max-width: 500px){
