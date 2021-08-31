@@ -37,7 +37,7 @@ function priceCheckerFetch(searchQuery, sortingStyle, currencyToFind){
     let exchangeData = data[1]
     displayQueryCards(queryData, exchangeData)
   })
-  .catch(error => $(".results").text("No cards for the given search, Try keywords in the name such as: Sol, Primal, Black, Lotus.")
+  .catch(error => $(".results").text("No cards for the given search. Try keywords in the name such as: 'Sol, Primal, Black, Lotus.'")
   );
 }
 
@@ -54,7 +54,7 @@ function displayQueryCards(queryData, exchangeData) {
   // ------------------------------------
   // loops through all the given cards for your search
   if (queryData.object === "error") {
-    $(".results").text("No cards for the given search, Try keywords in the name such as: Sol, Primal, Black, Lotus.")
+    $(".results").text("No cards for the given search. Try keywords in the name such as: 'Sol, Primal, Black, Lotus.'")
   } else {
     var i 
     for (i = 0; i < queryData.data.length; i++){
@@ -66,14 +66,14 @@ function displayQueryCards(queryData, exchangeData) {
 
       // checks the price to make sure its a number
       if(isNaN(currentBasePrice)) {
-        currentBasePrice = "Price not available, Try again later. Alternitavly The card may be too old.";
+        currentBasePrice = "Price not available, Try again later. Alternatively the card may be too old.";
       } else {
         currentBasePrice = currentBasePrice.toFixed(2);
       };
       
       // checks the price to make sure its a number
       if(isNaN(currentBasePriceFoil)) {
-        currentBasePriceFoil = "Price not available, Card may not have a foil version.";
+        currentBasePriceFoil = "Price not available. Card may not have a foil version.";
       } else {
         currentBasePriceFoil = currentBasePriceFoil.toFixed(2);
       };
@@ -111,7 +111,7 @@ function displayQueryCards(queryData, exchangeData) {
               <h3>Set:</h3><p> ${queryData.data[i].set_name}</p>
               <h3>Price(${currentCurrency}):</h3><p> ${currentBasePrice}</p>
               <h3>Foil price(${currentCurrency}):</h3><p> ${currentBasePriceFoil}</p>
-              <h3>Abilitys:</h3><p> ${queryData.data[i].oracle_text}</p>
+              <h3>Abilities:</h3><p> ${queryData.data[i].oracle_text}</p>
               <h3>EDHRec Rank:</h3><p> ${queryData.data[i].edhrec_rank}</p>
             </div>
           </div>`)
@@ -147,15 +147,15 @@ function mainPageDisplayRandom(data) {
   let randomSet = data.set_name;
   // if the price is fluctuating too much or too high
   if(randomPriceToFind === null){
-    randomPriceToFind = "Price Not Available. :(";
+    randomPriceToFind = "Price not available.";
   };
   // if the price is fluctuating too much or too high
   if(randomFoilPriceToFind === null){
-    randomFoilPriceToFind = "Price Not Available. :("
+    randomFoilPriceToFind = "Price not available."
   };
   // if its a unranked item such as a basic land / tokens
   if(randomRank === undefined){
-    randomRank = "N/A"
+    randomRank = "Rank not available."
   };
 // Display card info
   $(".random-card-area").append(`
@@ -168,7 +168,7 @@ function mainPageDisplayRandom(data) {
               <h3>Set:</h3><p> ${randomSet}</p>
               <h3>Price(USD):</h3><p> $ ${randomPriceToFind}</p>
               <h3>Foil price(USD):</h3><p> $ ${randomFoilPriceToFind}</p>
-              <h3>Abilitys:</h3><p> ${randomAbilitys}</p>
+              <h3>Abilities:</h3><p> ${randomAbilitys}</p>
               <h3>EDHRec Rank:</h3><p> ${randomRank}</p>
             </div>
           </div>`)
